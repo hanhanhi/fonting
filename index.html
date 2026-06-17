@@ -33,7 +33,8 @@
   .toolbar { padding: 10px 16px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .toolbar-title { font-size: 13px; color: var(--text2); flex: 1; }
   .canvas-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 400px; background: repeating-conic-gradient(#ccc 0% 25%, transparent 0% 50%) 0 0/16px 16px; }
-  #preview-canvas { border-radius: var(--radius); max-width: 100%; }
+  .preview-img { border-radius: var(--radius); max-width: 100%; display: block; -webkit-touch-callout: default; }
+  .hint { font-size: 12px; color: var(--text2); text-align: center; margin-top: 10px; line-height: 1.6; }
   textarea { width: 100%; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 9px 10px; font-size: 15px; resize: vertical; background: var(--bg); color: var(--text); min-height: 72px; font-family: inherit; line-height: 1.5; }
   textarea:focus { outline: none; border-color: var(--border2); }
   .toggle-group { display: flex; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
@@ -92,6 +93,7 @@
 </header>
 
 <div class="toast" id="toast"></div>
+<canvas id="preview-canvas" style="display:none"></canvas>
 
 <div class="app">
   <div class="panel">
@@ -156,11 +158,13 @@
   <div class="preview-area">
     <div class="toolbar">
       <span class="toolbar-title">預覽（格子＝透明背景）</span>
-      <button class="action-btn" onclick="copyImage()"><i class="ti ti-copy"></i> 複製圖片</button>
       <button class="action-btn primary" onclick="exportPNG()"><i class="ti ti-download"></i> 下載 PNG</button>
     </div>
     <div class="canvas-wrap">
-      <canvas id="preview-canvas"></canvas>
+      <div style="text-align:center">
+        <img id="preview-img" class="preview-img" src="" alt="預覽">
+        <p class="hint" id="save-hint"></p>
+      </div>
     </div>
   </div>
 </div>
@@ -199,8 +203,8 @@ let curFont=zhFonts[0], curMode='h', curAlign='left';
 let curTextColor='#2d2d2d', fontTab='zh', curGroup='白・黑';
 const PAD=32;
 let db;
+const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-// ── IndexedDB ──
 function openDB(){
   return new Promise((res,rej)=>{
     const req=indexedDB.open('fonting-fonts',1);
@@ -209,18 +213,9 @@ function openDB(){
     req.onerror=rej;
   });
 }
-function saveFont(name,buffer){
-  db.transaction('fonts','readwrite').objectStore('fonts').put({name,buffer,tab:fontTab});
-}
-function deleteFont(name){
-  db.transaction('fonts','readwrite').objectStore('fonts').delete(name);
-}
-function loadAllFonts(){
-  return new Promise(res=>{
-    const req=db.transaction('fonts','readonly').objectStore('fonts').getAll();
-    req.onsuccess=e=>res(e.target.result||[]);
-  });
-}
+function saveFont(name,buffer){db.transaction('fonts','readwrite').objectStore('fonts').put({name,buffer,tab:fontTab});}
+function deleteFont(name){db.transaction('fonts','readwrite').objectStore('fonts').delete(name);}
+function loadAllFonts(){return new Promise(res=>{const req=db.transaction('fonts','readonly').objectStore('fonts').getAll();req.onsuccess=e=>res(e.target.result||[]);});}
 async function restoreFonts(){
   const saved=await loadAllFonts();
   for(const entry of saved){
@@ -235,7 +230,6 @@ async function restoreFonts(){
   buildFontGrid(); draw();
 }
 
-// ── Font UI ──
 function getActiveFonts(){ return fontTab==='zh'?zhFonts:enFonts; }
 
 function buildFontGrid(){
@@ -291,7 +285,6 @@ function loadCustomFont(input){
   input.value='';
 }
 
-// ── Color UI ──
 function buildColorUI(){
   const tabsEl=document.getElementById('cg-tabs');
   tabsEl.innerHTML='';
@@ -321,7 +314,6 @@ function updateSelInfo(c){
   document.getElementById('sel-hex').textContent=c.hex;
 }
 
-// ── Controls ──
 function setMode(m){
   curMode=m;
   ['h','v'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===m));
@@ -333,7 +325,6 @@ function setAlign(a){
   draw();
 }
 
-// ── Draw ──
 function draw(){
   const ls=parseInt(document.getElementById('ls').value);
   const lh=parseFloat(document.getElementById('lh').value);
@@ -393,18 +384,10 @@ function draw(){
       });
     });
   }
-}
 
-// ── Actions ──
-async function copyImage(){
-  const canvas=document.getElementById('preview-canvas');
-  try{
-    const blob=await new Promise(res=>canvas.toBlob(res,'image/png'));
-    await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
-    showToast('已複製圖片！');
-  }catch(e){
-    showToast('複製失敗，請改用下載');
-  }
+  const img=document.getElementById('preview-img');
+  img.src=canvas.toDataURL('image/png');
+  document.getElementById('save-hint').textContent=isIOS?'長按圖片 → 儲存到相片':'';
 }
 
 function exportPNG(){
@@ -420,7 +403,6 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),2000);
 }
 
-// ── Init ──
 const jasonFF=new FontFace('JasonHandwriting1','url(https://cdn.jsdelivr.net/gh/max32002/JasonHandWritingFonts@20240409/webfont/JasonHandwriting1-Regular.woff2)');
 jasonFF.load().then(f=>{document.fonts.add(f);draw();}).catch(()=>{});
 

@@ -9,270 +9,75 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #ffffff;
-    --bg2: #f5f5f3;
-    --bg3: #ebebea;
-    --text: #1a1a1a;
-    --text2: #6b6b6b;
-    --border: rgba(0,0,0,0.12);
-    --border2: rgba(0,0,0,0.22);
-    --radius: 8px;
-    --radius-lg: 12px;
+    --bg: #ffffff; --bg2: #f5f5f3; --bg3: #ebebea;
+    --text: #1a1a1a; --text2: #6b6b6b;
+    --border: rgba(0,0,0,0.12); --border2: rgba(0,0,0,0.22);
+    --radius: 8px; --radius-lg: 12px;
   }
-
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #1a1a1a;
-      --bg2: #242424;
-      --bg3: #2e2e2e;
-      --text: #f0f0f0;
-      --text2: #999;
-      --border: rgba(255,255,255,0.12);
-      --border2: rgba(255,255,255,0.22);
+      --bg: #1a1a1a; --bg2: #242424; --bg3: #2e2e2e;
+      --text: #f0f0f0; --text2: #999;
+      --border: rgba(255,255,255,0.12); --border2: rgba(255,255,255,0.22);
     }
   }
-
-  body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--bg3);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  header {
-    padding: 14px 24px;
-    background: var(--bg);
-    border-bottom: 0.5px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
+  body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg3); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+  header { padding: 14px 24px; background: var(--bg); border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 10px; }
   header h1 { font-size: 16px; font-weight: 500; }
   header .sub { font-size: 12px; color: var(--text2); }
-
-  .app {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    flex: 1;
-    max-width: 1200px;
-    width: 100%;
-    margin: 24px auto;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: 0.5px solid var(--border);
-    background: var(--bg);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-
-  .panel {
-    background: var(--bg2);
-    border-right: 0.5px solid var(--border);
-    padding: 16px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-height: calc(100vh - 120px);
-  }
-
-  .sec-label {
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--text2);
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    margin-bottom: 7px;
-  }
-
-  .preview-area {
-    background: var(--bg);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .toolbar {
-    padding: 10px 16px;
-    border-bottom: 0.5px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
+  .app { display: grid; grid-template-columns: 300px 1fr; flex: 1; max-width: 1200px; width: 100%; margin: 24px auto; border-radius: var(--radius-lg); overflow: hidden; border: 0.5px solid var(--border); background: var(--bg); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .panel { background: var(--bg2); border-right: 0.5px solid var(--border); padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; max-height: calc(100vh - 120px); }
+  .sec-label { font-size: 10px; font-weight: 500; color: var(--text2); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 7px; }
+  .preview-area { background: var(--bg); display: flex; flex-direction: column; }
+  .toolbar { padding: 10px 16px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .toolbar-title { font-size: 13px; color: var(--text2); flex: 1; }
-
-  .canvas-wrap {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    min-height: 400px;
-  }
-
-  #preview-canvas {
-    border-radius: var(--radius);
-    max-width: 100%;
-  }
-
-  /* Textarea */
-  textarea {
-    width: 100%;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 9px 10px;
-    font-size: 15px;
-    resize: vertical;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 72px;
-    font-family: inherit;
-    line-height: 1.5;
-  }
+  .canvas-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 400px; background: repeating-conic-gradient(#ccc 0% 25%, transparent 0% 50%) 0 0/16px 16px; }
+  #preview-canvas { border-radius: var(--radius); max-width: 100%; }
+  textarea { width: 100%; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 9px 10px; font-size: 15px; resize: vertical; background: var(--bg); color: var(--text); min-height: 72px; font-family: inherit; line-height: 1.5; }
   textarea:focus { outline: none; border-color: var(--border2); }
-
-  /* Toggle group */
-  .toggle-group {
-    display: flex;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .toggle-btn {
-    flex: 1; padding: 6px 4px;
-    border: none; background: none; cursor: pointer;
-    font-size: 12px; color: var(--text2);
-    font-family: inherit;
-  }
-  .toggle-btn.active {
-    background: var(--bg3);
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  /* Font tabs */
+  .toggle-group { display: flex; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .toggle-btn { flex: 1; padding: 6px 4px; border: none; background: none; cursor: pointer; font-size: 12px; color: var(--text2); font-family: inherit; }
+  .toggle-btn.active { background: var(--bg3); color: var(--text); font-weight: 500; }
   .font-tabs { display: flex; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 8px; }
   .font-tab { flex: 1; padding: 5px 4px; border: none; background: none; cursor: pointer; font-size: 11px; color: var(--text2); font-family: inherit; }
   .font-tab.active { background: var(--bg3); color: var(--text); font-weight: 500; }
-
-  /* Font grid */
   .font-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-  .font-btn {
-    padding: 7px 5px; border: 0.5px solid var(--border);
-    border-radius: var(--radius); background: var(--bg);
-    cursor: pointer; font-size: 11px; color: var(--text);
-    text-align: center; line-height: 1.3; position: relative;
-    font-family: inherit;
-  }
+  .font-btn { padding: 7px 5px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--bg); cursor: pointer; font-size: 11px; color: var(--text); text-align: center; line-height: 1.3; position: relative; font-family: inherit; }
   .font-btn:hover { border-color: var(--border2); }
   .font-btn.active { border: 1.5px solid var(--text2); background: var(--bg2); }
   .font-btn .sample { display: block; font-size: 20px; margin-bottom: 3px; }
-  .font-btn .del-btn {
-    position: absolute; top: 3px; right: 4px;
-    font-size: 10px; color: var(--text2);
-    background: none; border: none; cursor: pointer;
-    line-height: 1; padding: 0; display: none;
-  }
+  .font-btn .del-btn { position: absolute; top: 3px; right: 4px; font-size: 10px; color: var(--text2); background: none; border: none; cursor: pointer; line-height: 1; padding: 0; display: none; }
   .font-btn:hover .del-btn { display: block; }
   .font-btn .del-btn:hover { color: #c0392b; }
-
-  /* Upload btn */
-  .upload-btn {
-    width: 100%; padding: 8px;
-    border: 0.5px dashed var(--border2);
-    border-radius: var(--radius); background: none;
-    cursor: pointer; font-size: 12px; color: var(--text2);
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    margin-top: 6px; font-family: inherit;
-  }
+  .upload-btn { width: 100%; padding: 8px; border: 0.5px dashed var(--border2); border-radius: var(--radius); background: none; cursor: pointer; font-size: 12px; color: var(--text2); display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 6px; font-family: inherit; }
   .upload-btn:hover { background: var(--bg); }
-
-  /* Slider */
   .slider-row { display: flex; align-items: center; gap: 8px; }
   .slider-row input[type=range] { flex: 1; accent-color: var(--text); }
   .sval { font-size: 12px; color: var(--text2); min-width: 34px; text-align: right; }
-
-  /* Align */
   .align-row { display: flex; gap: 5px; }
-  .align-btn {
-    flex: 1; padding: 6px; border: 0.5px solid var(--border);
-    border-radius: var(--radius); background: var(--bg);
-    cursor: pointer; font-size: 15px; color: var(--text2);
-  }
+  .align-btn { flex: 1; padding: 6px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--bg); cursor: pointer; font-size: 15px; color: var(--text2); }
   .align-btn.active { background: var(--bg3); color: var(--text); border-color: var(--border2); }
-
-  /* Color group tabs */
   .cg-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
-  .cg-tab {
-    padding: 3px 8px; border: 0.5px solid var(--border);
-    border-radius: 12px; background: none;
-    cursor: pointer; font-size: 11px; color: var(--text2);
-    font-family: inherit;
-  }
+  .cg-tab { padding: 3px 8px; border: 0.5px solid var(--border); border-radius: 12px; background: none; cursor: pointer; font-size: 11px; color: var(--text2); font-family: inherit; }
   .cg-tab.active { background: var(--bg3); color: var(--text); font-weight: 500; border-color: var(--border2); }
-
-  /* Swatches */
   .swatches { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
-  .swatch {
-    width: 100%; aspect-ratio: 1; border-radius: 4px;
-    cursor: pointer; border: 1.5px solid transparent;
-    transition: transform .1s;
-  }
+  .swatch { width: 100%; aspect-ratio: 1; border-radius: 4px; cursor: pointer; border: 1.5px solid transparent; transition: transform .1s; }
   .swatch:hover { transform: scale(1.18); }
   .swatch.active { border-color: var(--text); }
-
-  /* Selected color info */
-  .sel-info {
-    display: flex; align-items: center; gap: 8px;
-    margin-top: 8px; padding: 8px;
-    background: var(--bg); border-radius: var(--radius);
-    border: 0.5px solid var(--border);
-  }
+  .sel-info { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 8px; background: var(--bg); border-radius: var(--radius); border: 0.5px solid var(--border); }
   .sel-dot { width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0; border: 0.5px solid var(--border); }
   .sel-name { font-size: 12px; color: var(--text); }
   .sel-hex { font-size: 11px; color: var(--text2); }
-
-  /* BG presets */
-  .bg-row { display: flex; gap: 5px; }
-  .bg-preset {
-    flex: 1; height: 30px; border-radius: var(--radius);
-    border: 0.5px solid var(--border); cursor: pointer;
-    font-size: 11px; font-weight: 500; font-family: inherit;
-  }
-  .bg-preset.active { border: 2px solid var(--text2); }
-  .custom-bg-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-  .custom-bg-row label { font-size: 12px; color: var(--text2); }
-  .custom-bg-row input[type=color] {
-    width: 32px; height: 32px;
-    border: 0.5px solid var(--border); border-radius: var(--radius);
-    cursor: pointer; padding: 2px; background: none;
-  }
-
-  /* Action buttons */
-  .action-btn {
-    padding: 7px 12px; border: 0.5px solid var(--border2);
-    border-radius: var(--radius); background: none;
-    cursor: pointer; font-size: 12px; color: var(--text);
-    display: flex; align-items: center; gap: 5px;
-    font-family: inherit;
-  }
+  .action-btn { padding: 7px 12px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: none; cursor: pointer; font-size: 12px; color: var(--text); display: flex; align-items: center; gap: 5px; font-family: inherit; }
   .action-btn:hover { background: var(--bg2); }
-  .action-btn.primary {
-    background: var(--text); color: var(--bg);
-    border-color: transparent;
-  }
+  .action-btn.primary { background: var(--text); color: var(--bg); border-color: transparent; }
   .action-btn.primary:hover { opacity: .85; }
-
-  /* Scrollbar */
+  .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 9px 20px; border-radius: 20px; font-size: 13px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 999; white-space: nowrap; }
+  .toast.show { opacity: 1; }
   .panel::-webkit-scrollbar { width: 4px; }
   .panel::-webkit-scrollbar-track { background: transparent; }
   .panel::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-
   @media (max-width: 720px) {
     .app { grid-template-columns: 1fr; margin: 0; border-radius: 0; }
     .panel { max-height: 50vh; }
@@ -286,15 +91,15 @@
   <span class="sub">繁體中文質感字體工具</span>
 </header>
 
+<div class="toast" id="toast"></div>
+
 <div class="app">
   <div class="panel">
-
     <div>
       <div class="sec-label">輸入文字</div>
       <textarea id="text-input" placeholder="在此輸入文字…">在最自在的語言下筆
 一字一句都是最真實的你</textarea>
     </div>
-
     <div>
       <div class="sec-label">書寫方向</div>
       <div class="toggle-group">
@@ -302,7 +107,6 @@
         <button class="toggle-btn" id="btn-v" onclick="setMode('v')">直書</button>
       </div>
     </div>
-
     <div>
       <div class="sec-label">對齊</div>
       <div class="align-row">
@@ -311,12 +115,11 @@
         <button class="align-btn" id="al-r" onclick="setAlign('right')" title="置右"><i class="ti ti-align-right"></i></button>
       </div>
     </div>
-
     <div>
       <div class="sec-label">字體</div>
       <div class="font-tabs">
-        <button class="font-tab active" id="tab-zh" onclick="switchFontTab('zh', this)">繁體中文</button>
-        <button class="font-tab" id="tab-en" onclick="switchFontTab('en', this)">英文</button>
+        <button class="font-tab active" id="tab-zh" onclick="switchFontTab('zh',this)">繁體中文</button>
+        <button class="font-tab" id="tab-en" onclick="switchFontTab('en',this)">英文</button>
       </div>
       <div class="font-grid" id="font-grid"></div>
       <button class="upload-btn" onclick="document.getElementById('font-upload').click()">
@@ -324,31 +127,18 @@
       </button>
       <input type="file" id="font-upload" accept=".ttf,.otf" style="display:none" onchange="loadCustomFont(this)">
     </div>
-
     <div>
       <div class="sec-label">字距</div>
-      <div class="slider-row">
-        <input type="range" id="ls" min="-5" max="30" value="2" step="1" oninput="draw()">
-        <span class="sval" id="ls-v">2px</span>
-      </div>
+      <div class="slider-row"><input type="range" id="ls" min="-5" max="30" value="2" step="1" oninput="draw()"><span class="sval" id="ls-v">2px</span></div>
     </div>
-
     <div>
       <div class="sec-label">行距</div>
-      <div class="slider-row">
-        <input type="range" id="lh" min="1.0" max="3.0" value="1.6" step="0.1" oninput="draw()">
-        <span class="sval" id="lh-v">1.6</span>
-      </div>
+      <div class="slider-row"><input type="range" id="lh" min="1.0" max="3.0" value="1.6" step="0.1" oninput="draw()"><span class="sval" id="lh-v">1.6</span></div>
     </div>
-
     <div>
       <div class="sec-label">字級</div>
-      <div class="slider-row">
-        <input type="range" id="fs" min="14" max="60" value="28" step="1" oninput="draw()">
-        <span class="sval" id="fs-v">28px</span>
-      </div>
+      <div class="slider-row"><input type="range" id="fs" min="14" max="60" value="28" step="1" oninput="draw()"><span class="sval" id="fs-v">28px</span></div>
     </div>
-
     <div>
       <div class="sec-label">文字顏色（日本傳統色）</div>
       <div class="cg-tabs" id="cg-tabs"></div>
@@ -361,292 +151,243 @@
         </div>
       </div>
     </div>
-
-    <div>
-      <div class="sec-label">背景</div>
-      <div class="bg-row" id="bg-presets"></div>
-      <div class="custom-bg-row">
-        <label>自訂背景色</label>
-        <input type="color" id="bg-color" value="#ffffff" oninput="onBgCustom()">
-      </div>
-    </div>
-
-  </div><!-- /panel -->
+  </div>
 
   <div class="preview-area">
     <div class="toolbar">
-      <span class="toolbar-title">預覽</span>
-      <button class="action-btn" onclick="copyText()"><i class="ti ti-copy"></i> 複製文字</button>
-      <button class="action-btn primary" onclick="exportPNG()"><i class="ti ti-download"></i> 匯出 PNG</button>
+      <span class="toolbar-title">預覽（格子＝透明背景）</span>
+      <button class="action-btn" onclick="copyImage()"><i class="ti ti-copy"></i> 複製圖片</button>
+      <button class="action-btn primary" onclick="exportPNG()"><i class="ti ti-download"></i> 下載 PNG</button>
     </div>
     <div class="canvas-wrap">
-      <canvas id="preview-canvas" width="600" height="400"></canvas>
+      <canvas id="preview-canvas"></canvas>
     </div>
   </div>
-
-</div><!-- /app -->
+</div>
 
 <script>
 const ZH_FONTS = [
-  {id:'noto-sans',  name:'思源黑體',   css:'Noto Sans TC',      sample:'無', custom:false},
-  {id:'noto-serif', name:'思源宋體',   css:'Noto Serif TC',     sample:'明', custom:false},
-  {id:'lxgw',       name:'霞鶩楷體',   css:'LXGW WenKai TC',   sample:'楷', custom:false},
-  {id:'zen',        name:'禪舊明朝',   css:'Zen Old Mincho',    sample:'禪', custom:false},
-  {id:'biz',        name:'BIZ明朝',    css:'BIZ UDMincho',      sample:'典', custom:false},
-  {id:'huninn',     name:'jf粉圓',     css:'Huninn',            sample:'粉', custom:false},
-  {id:'iansui',     name:'芫荽',       css:'Iansui',            sample:'荽', custom:false},
-  {id:'jason',      name:'清松手寫',   css:'JasonHandwriting1', sample:'寫', custom:false},
+  {id:'noto-sans',  name:'思源黑體',  css:'Noto Sans TC',      sample:'無', custom:false},
+  {id:'noto-serif', name:'思源宋體',  css:'Noto Serif TC',     sample:'明', custom:false},
+  {id:'lxgw',       name:'霞鶩楷體',  css:'LXGW WenKai TC',   sample:'楷', custom:false},
+  {id:'zen',        name:'禪舊明朝',  css:'Zen Old Mincho',    sample:'禪', custom:false},
+  {id:'biz',        name:'BIZ明朝',   css:'BIZ UDMincho',      sample:'典', custom:false},
+  {id:'huninn',     name:'jf粉圓',    css:'Huninn',            sample:'粉', custom:false},
+  {id:'iansui',     name:'芫荽',      css:'Iansui',            sample:'荽', custom:false},
+  {id:'jason',      name:'清松手寫',  css:'JasonHandwriting1', sample:'寫', custom:false},
 ];
-
 const EN_FONTS = [
-  {id:'playfair',  name:'Playfair Display',  css:'Playfair Display',  sample:'Aa', custom:false},
-  {id:'cormorant', name:'Cormorant Garant',  css:'Cormorant Garant',  sample:'Aa', custom:false},
-  {id:'dm-serif',  name:'DM Serif Display',  css:'DM Serif Display',  sample:'Aa', custom:false},
-  {id:'bebas',     name:'Bebas Neue',        css:'Bebas Neue',        sample:'Aa', custom:false},
-  {id:'pacifico',  name:'Pacifico',          css:'Pacifico',          sample:'Aa', custom:false},
+  {id:'playfair',  name:'Playfair Display', css:'Playfair Display', sample:'Aa', custom:false},
+  {id:'cormorant', name:'Cormorant Garant', css:'Cormorant Garant', sample:'Aa', custom:false},
+  {id:'dm-serif',  name:'DM Serif Display', css:'DM Serif Display', sample:'Aa', custom:false},
+  {id:'bebas',     name:'Bebas Neue',       css:'Bebas Neue',       sample:'Aa', custom:false},
+  {id:'pacifico',  name:'Pacifico',         css:'Pacifico',         sample:'Aa', custom:false},
 ];
-
-let zhFonts = [...ZH_FONTS];
-let enFonts = [...EN_FONTS];
-let curFont  = zhFonts[0];
-let curMode  = 'h';
-let curAlign = 'left';
-let curTextColor = '#2d2d2d';
-let curBgColor   = '#ffffff';
-let fontTab  = 'zh';
-let curGroup = '白・黑';
-
 const COLOR_GROUPS = {
-  '白・黑': [
-    {name:'白（しろ）',hex:'#ffffff'},{name:'胡粉（ごふん）',hex:'#f9f4ec'},{name:'象牙色（ぞうげいろ）',hex:'#f5e9c8'},
-    {name:'乳白色（にゅうはくしょく）',hex:'#f8f4e6'},{name:'生成色（きなりいろ）',hex:'#faf4dc'},{name:'白練（しろねり）',hex:'#f0ede0'},
-    {name:'灰白色（はいはくしょく）',hex:'#dddbd6'},{name:'銀鼠（ぎんねず）',hex:'#9ea3a5'},{name:'鉛色（なまりいろ）',hex:'#6e7278'},
-    {name:'墨（すみ）',hex:'#2d2d2d'},{name:'漆黒（しっこく）',hex:'#1b1b1b'},{name:'黑（くろ）',hex:'#0d0d0d'},
-  ],
-  '赤・朱': [
-    {name:'桜色（さくらいろ）',hex:'#fcd4d8'},{name:'薄桜（うすざくら）',hex:'#fdeff2'},{name:'桃色（ももいろ）',hex:'#f5a0a0'},
-    {name:'珊瑚色（さんごいろ）',hex:'#f08080'},{name:'茜色（あかねいろ）',hex:'#c0392b'},{name:'朱色（しゅいろ）',hex:'#e5371a'},
-    {name:'緋色（ひいろ）',hex:'#c62e3e'},{name:'紅色（べにいろ）',hex:'#c9254a'},{name:'真紅（しんく）',hex:'#9a0828'},
-    {name:'赤（あか）',hex:'#d7283c'},{name:'赤紅（あかべに）',hex:'#b5001c'},{name:'深紅（しんく）',hex:'#7d1031'},
-  ],
-  '橙・茶': [
-    {name:'蜜柑色（みかんいろ）',hex:'#f5a623'},{name:'橙色（だいだいいろ）',hex:'#e2722e'},{name:'黄丹（おうに）',hex:'#e8602c'},
-    {name:'柿色（かきいろ）',hex:'#d1671e'},{name:'樺色（かばいろ）',hex:'#af6838'},{name:'茶色（ちゃいろ）',hex:'#965b2a'},
-    {name:'栗色（くりいろ）',hex:'#7d4b26'},{name:'焦茶（こげちゃ）',hex:'#573018'},{name:'赤茶（あかちゃ）',hex:'#9e4015'},
-    {name:'小豆色（あずきいろ）',hex:'#8e3a3a'},{name:'弁柄色（べんがらいろ）',hex:'#9c3323'},{name:'胡桃色（くるみいろ）',hex:'#9d7141'},
-  ],
-  '黃・金': [
-    {name:'レモン色',hex:'#f5f047'},{name:'菜の花色（なのはないろ）',hex:'#f0e040'},{name:'黄色（きいろ）',hex:'#f2d000'},
-    {name:'山吹色（やまぶきいろ）',hex:'#f0a500'},{name:'金色（きんいろ）',hex:'#d4a017'},{name:'黄土色（おうどいろ）',hex:'#c09428'},
-    {name:'芥子色（からしいろ）',hex:'#c49628'},{name:'向日葵色（ひまわりいろ）',hex:'#f7a92c'},{name:'麦藁色（むぎわらいろ）',hex:'#d4b740'},
-    {name:'黄金（こがね）',hex:'#b8960c'},{name:'砂色（すないろ）',hex:'#c8b48c'},{name:'薄茶（うすちゃ）',hex:'#d0b48e'},
-  ],
-  '緑・翠': [
-    {name:'若草色（わかくさいろ）',hex:'#a9c935'},{name:'萌黄（もえぎ）',hex:'#8fb82a'},{name:'草色（くさいろ）',hex:'#7b9a2e'},
-    {name:'若竹色（わかたけいろ）',hex:'#6bab74'},{name:'緑（みどり）',hex:'#3a8a3a'},{name:'常磐色（ときわいろ）',hex:'#2d7248'},
-    {name:'松葉色（まつばいろ）',hex:'#4c7c50'},{name:'苔色（こけいろ）',hex:'#5a6e2c'},{name:'深緑（ふかみどり）',hex:'#1f5c38'},
-    {name:'青磁色（せいじいろ）',hex:'#a8cdb8'},{name:'薄緑（うすみどり）',hex:'#b9d6a0'},{name:'翠色（みどりいろ）',hex:'#44a885'},
-  ],
-  '青・藍': [
-    {name:'水色（みずいろ）',hex:'#a0d8ef'},{name:'空色（そらいろ）',hex:'#6cbbe4'},{name:'縹色（はなだいろ）',hex:'#3981b8'},
-    {name:'藍色（あいいろ）',hex:'#2166a2'},{name:'瑠璃色（るりいろ）',hex:'#1a4f9e'},{name:'紺色（こんいろ）',hex:'#192f60'},
-    {name:'青（あお）',hex:'#2160a4'},{name:'浅縹（あさはなだ）',hex:'#7ab4d4'},{name:'群青色（ぐんじょういろ）',hex:'#1a3d8f'},
-    {name:'青鈍（あおにび）',hex:'#4e6e8c'},{name:'花浅葱（はなあさぎ）',hex:'#66b3c3'},{name:'浅葱色（あさぎいろ）',hex:'#38a5be'},
-  ],
-  '紫': [
-    {name:'藤色（ふじいろ）',hex:'#b09fc8'},{name:'薄紫（うすむらさき）',hex:'#c8a8d8'},{name:'紫（むらさき）',hex:'#7a3d8c'},
-    {name:'江戸紫（えどむらさき）',hex:'#693b85'},{name:'深紫（ふかむらさき）',hex:'#3d1a5c'},{name:'赤紫（あかむらさき）',hex:'#963070'},
-    {name:'桔梗色（ききょういろ）',hex:'#5c3d8a'},{name:'菫色（すみれいろ）',hex:'#7060a8'},{name:'蒲葡（こうどう）',hex:'#72315c'},
-    {name:'牡丹色（ぼたんいろ）',hex:'#c0316c'},{name:'紅紫（べにむらさき）',hex:'#9c3078'},{name:'古代紫（こだいむらさき）',hex:'#865478'},
-  ],
-  '粉・肌': [
-    {name:'鴇色（ときいろ）',hex:'#e8a0a8'},{name:'薄紅（うすくれない）',hex:'#e8909a'},{name:'撫子色（なでしこいろ）',hex:'#e880a0'},
-    {name:'退紅（あらぞめ）',hex:'#e8a8a0'},{name:'宍色（ししいろ）',hex:'#e8b8a0'},{name:'肌色（はだいろ）',hex:'#f5d0b0'},
-    {name:'薄柿（うすがき）',hex:'#e8c0b0'},{name:'一斤染（いっこんぞめ）',hex:'#f0a890'},{name:'梅鼠（うめねず）',hex:'#c898a8'},
-    {name:'桃花色（ももはないろ）',hex:'#f0c8c8'},{name:'灰桜（はいざくら）',hex:'#e0c8c0'},{name:'珊瑚朱色（さんごしゅいろ）',hex:'#e08070'},
-  ],
+  '白・黑':[{name:'白（しろ）',hex:'#ffffff'},{name:'胡粉（ごふん）',hex:'#f9f4ec'},{name:'象牙色（ぞうげいろ）',hex:'#f5e9c8'},{name:'乳白色（にゅうはくしょく）',hex:'#f8f4e6'},{name:'生成色（きなりいろ）',hex:'#faf4dc'},{name:'白練（しろねり）',hex:'#f0ede0'},{name:'灰白色（はいはくしょく）',hex:'#dddbd6'},{name:'銀鼠（ぎんねず）',hex:'#9ea3a5'},{name:'鉛色（なまりいろ）',hex:'#6e7278'},{name:'墨（すみ）',hex:'#2d2d2d'},{name:'漆黒（しっこく）',hex:'#1b1b1b'},{name:'黑（くろ）',hex:'#0d0d0d'}],
+  '赤・朱':[{name:'桜色（さくらいろ）',hex:'#fcd4d8'},{name:'薄桜（うすざくら）',hex:'#fdeff2'},{name:'桃色（ももいろ）',hex:'#f5a0a0'},{name:'珊瑚色（さんごいろ）',hex:'#f08080'},{name:'茜色（あかねいろ）',hex:'#c0392b'},{name:'朱色（しゅいろ）',hex:'#e5371a'},{name:'緋色（ひいろ）',hex:'#c62e3e'},{name:'紅色（べにいろ）',hex:'#c9254a'},{name:'真紅（しんく）',hex:'#9a0828'},{name:'赤（あか）',hex:'#d7283c'},{name:'赤紅（あかべに）',hex:'#b5001c'},{name:'深紅（しんく）',hex:'#7d1031'}],
+  '橙・茶':[{name:'蜜柑色（みかんいろ）',hex:'#f5a623'},{name:'橙色（だいだいいろ）',hex:'#e2722e'},{name:'黄丹（おうに）',hex:'#e8602c'},{name:'柿色（かきいろ）',hex:'#d1671e'},{name:'樺色（かばいろ）',hex:'#af6838'},{name:'茶色（ちゃいろ）',hex:'#965b2a'},{name:'栗色（くりいろ）',hex:'#7d4b26'},{name:'焦茶（こげちゃ）',hex:'#573018'},{name:'赤茶（あかちゃ）',hex:'#9e4015'},{name:'小豆色（あずきいろ）',hex:'#8e3a3a'},{name:'弁柄色（べんがらいろ）',hex:'#9c3323'},{name:'胡桃色（くるみいろ）',hex:'#9d7141'}],
+  '黃・金':[{name:'レモン色',hex:'#f5f047'},{name:'菜の花色（なのはないろ）',hex:'#f0e040'},{name:'黄色（きいろ）',hex:'#f2d000'},{name:'山吹色（やまぶきいろ）',hex:'#f0a500'},{name:'金色（きんいろ）',hex:'#d4a017'},{name:'黄土色（おうどいろ）',hex:'#c09428'},{name:'芥子色（からしいろ）',hex:'#c49628'},{name:'向日葵色（ひまわりいろ）',hex:'#f7a92c'},{name:'麦藁色（むぎわらいろ）',hex:'#d4b740'},{name:'黄金（こがね）',hex:'#b8960c'},{name:'砂色（すないろ）',hex:'#c8b48c'},{name:'薄茶（うすちゃ）',hex:'#d0b48e'}],
+  '緑・翠':[{name:'若草色（わかくさいろ）',hex:'#a9c935'},{name:'萌黄（もえぎ）',hex:'#8fb82a'},{name:'草色（くさいろ）',hex:'#7b9a2e'},{name:'若竹色（わかたけいろ）',hex:'#6bab74'},{name:'緑（みどり）',hex:'#3a8a3a'},{name:'常磐色（ときわいろ）',hex:'#2d7248'},{name:'松葉色（まつばいろ）',hex:'#4c7c50'},{name:'苔色（こけいろ）',hex:'#5a6e2c'},{name:'深緑（ふかみどり）',hex:'#1f5c38'},{name:'青磁色（せいじいろ）',hex:'#a8cdb8'},{name:'薄緑（うすみどり）',hex:'#b9d6a0'},{name:'翠色（みどりいろ）',hex:'#44a885'}],
+  '青・藍':[{name:'水色（みずいろ）',hex:'#a0d8ef'},{name:'空色（そらいろ）',hex:'#6cbbe4'},{name:'縹色（はなだいろ）',hex:'#3981b8'},{name:'藍色（あいいろ）',hex:'#2166a2'},{name:'瑠璃色（るりいろ）',hex:'#1a4f9e'},{name:'紺色（こんいろ）',hex:'#192f60'},{name:'青（あお）',hex:'#2160a4'},{name:'浅縹（あさはなだ）',hex:'#7ab4d4'},{name:'群青色（ぐんじょういろ）',hex:'#1a3d8f'},{name:'青鈍（あおにび）',hex:'#4e6e8c'},{name:'花浅葱（はなあさぎ）',hex:'#66b3c3'},{name:'浅葱色（あさぎいろ）',hex:'#38a5be'}],
+  '紫':[{name:'藤色（ふじいろ）',hex:'#b09fc8'},{name:'薄紫（うすむらさき）',hex:'#c8a8d8'},{name:'紫（むらさき）',hex:'#7a3d8c'},{name:'江戸紫（えどむらさき）',hex:'#693b85'},{name:'深紫（ふかむらさき）',hex:'#3d1a5c'},{name:'赤紫（あかむらさき）',hex:'#963070'},{name:'桔梗色（ききょういろ）',hex:'#5c3d8a'},{name:'菫色（すみれいろ）',hex:'#7060a8'},{name:'蒲葡（こうどう）',hex:'#72315c'},{name:'牡丹色（ぼたんいろ）',hex:'#c0316c'},{name:'紅紫（べにむらさき）',hex:'#9c3078'},{name:'古代紫（こだいむらさき）',hex:'#865478'}],
+  '粉・肌':[{name:'鴇色（ときいろ）',hex:'#e8a0a8'},{name:'薄紅（うすくれない）',hex:'#e8909a'},{name:'撫子色（なでしこいろ）',hex:'#e880a0'},{name:'退紅（あらぞめ）',hex:'#e8a8a0'},{name:'宍色（ししいろ）',hex:'#e8b8a0'},{name:'肌色（はだいろ）',hex:'#f5d0b0'},{name:'薄柿（うすがき）',hex:'#e8c0b0'},{name:'一斤染（いっこんぞめ）',hex:'#f0a890'},{name:'梅鼠（うめねず）',hex:'#c898a8'},{name:'桃花色（ももはないろ）',hex:'#f0c8c8'},{name:'灰桜（はいざくら）',hex:'#e0c8c0'},{name:'珊瑚朱色（さんごしゅいろ）',hex:'#e08070'}],
 };
 
-const BG_PRESETS = [
-  {label:'白', color:'#ffffff'}, {label:'米', color:'#f5efe0'},
-  {label:'淺灰', color:'#f0eeea'}, {label:'炭', color:'#2a2a2a'},
-  {label:'墨', color:'#111111'}, {label:'深藍', color:'#1a2436'},
-];
+let zhFonts=[...ZH_FONTS], enFonts=[...EN_FONTS];
+let curFont=zhFonts[0], curMode='h', curAlign='left';
+let curTextColor='#2d2d2d', fontTab='zh', curGroup='白・黑';
+const PAD=32;
+let db;
 
-// ── Font UI ──────────────────────────────────────────
+// ── IndexedDB ──
+function openDB(){
+  return new Promise((res,rej)=>{
+    const req=indexedDB.open('fonting-fonts',1);
+    req.onupgradeneeded=e=>e.target.result.createObjectStore('fonts',{keyPath:'name'});
+    req.onsuccess=e=>{db=e.target.result;res(db);};
+    req.onerror=rej;
+  });
+}
+function saveFont(name,buffer){
+  db.transaction('fonts','readwrite').objectStore('fonts').put({name,buffer,tab:fontTab});
+}
+function deleteFont(name){
+  db.transaction('fonts','readwrite').objectStore('fonts').delete(name);
+}
+function loadAllFonts(){
+  return new Promise(res=>{
+    const req=db.transaction('fonts','readonly').objectStore('fonts').getAll();
+    req.onsuccess=e=>res(e.target.result||[]);
+  });
+}
+async function restoreFonts(){
+  const saved=await loadAllFonts();
+  for(const entry of saved){
+    try{
+      const ff=new FontFace(entry.name,entry.buffer);
+      const loaded=await ff.load();
+      document.fonts.add(loaded);
+      const f={id:'custom-'+entry.name,name:entry.name,css:entry.name,sample:'字',custom:true};
+      if(entry.tab==='en') enFonts.push(f); else zhFonts.push(f);
+    }catch(e){}
+  }
+  buildFontGrid(); draw();
+}
 
-function getActiveFonts() { return fontTab === 'zh' ? zhFonts : enFonts; }
+// ── Font UI ──
+function getActiveFonts(){ return fontTab==='zh'?zhFonts:enFonts; }
 
-function buildFontGrid() {
-  const grid = document.getElementById('font-grid');
-  grid.innerHTML = '';
-  getActiveFonts().forEach(f => {
-    const b = document.createElement('button');
-    b.className = 'font-btn' + (f === curFont ? ' active' : '');
-    b.innerHTML = `<span class="sample" style="font-family:'${f.css}'">${f.sample}</span>${f.name}`;
-    if (f.custom) {
-      const del = document.createElement('button');
-      del.className = 'del-btn';
-      del.title = '移除';
-      del.textContent = '✕';
-      del.onclick = e => { e.stopPropagation(); removeCustomFont(f); };
+function buildFontGrid(){
+  const grid=document.getElementById('font-grid');
+  grid.innerHTML='';
+  getActiveFonts().forEach(f=>{
+    const b=document.createElement('button');
+    b.className='font-btn'+(f===curFont?' active':'');
+    b.innerHTML=`<span class="sample" style="font-family:'${f.css}'">${f.sample}</span>${f.name}`;
+    if(f.custom){
+      const del=document.createElement('button');
+      del.className='del-btn'; del.title='移除'; del.textContent='✕';
+      del.onclick=e=>{e.stopPropagation();removeCustomFont(f);};
       b.appendChild(del);
     }
-    b.onclick = () => { curFont = f; buildFontGrid(); draw(); };
+    b.onclick=()=>{curFont=f;buildFontGrid();draw();};
     grid.appendChild(b);
   });
 }
 
-function removeCustomFont(f) {
-  if (fontTab === 'zh') zhFonts = zhFonts.filter(x => x !== f);
-  else enFonts = enFonts.filter(x => x !== f);
-  if (curFont === f) curFont = getActiveFonts()[0];
-  buildFontGrid();
-  draw();
+function removeCustomFont(f){
+  deleteFont(f.name);
+  if(fontTab==='zh') zhFonts=zhFonts.filter(x=>x!==f);
+  else enFonts=enFonts.filter(x=>x!==f);
+  if(curFont===f) curFont=getActiveFonts()[0];
+  buildFontGrid(); draw();
 }
 
-function switchFontTab(tab, el) {
-  fontTab = tab;
-  document.querySelectorAll('.font-tab').forEach(t => t.classList.remove('active'));
+function switchFontTab(tab,el){
+  fontTab=tab;
+  document.querySelectorAll('.font-tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   buildFontGrid();
 }
 
-function loadCustomFont(input) {
-  const file = input.files[0]; if (!file) return;
-  const name = file.name.replace(/\.[^.]+$/, '');
-  const reader = new FileReader();
-  reader.onload = e => {
-    const ff = new FontFace(name, e.target.result);
-    ff.load().then(loaded => {
+function loadCustomFont(input){
+  const file=input.files[0]; if(!file) return;
+  const name=file.name.replace(/\.[^.]+$/,'');
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const buf=e.target.result;
+    const ff=new FontFace(name,buf);
+    ff.load().then(loaded=>{
       document.fonts.add(loaded);
-      const f = { id: 'custom-' + Date.now(), name, css: name, sample: '字', custom: true };
-      if (fontTab === 'zh') zhFonts.push(f);
-      else enFonts.push(f);
-      curFont = f;
-      buildFontGrid();
-      draw();
+      saveFont(name,buf);
+      const f={id:'custom-'+Date.now(),name,css:name,sample:'字',custom:true};
+      if(fontTab==='zh') zhFonts.push(f); else enFonts.push(f);
+      curFont=f; buildFontGrid(); draw();
+      showToast(`「${name}」已儲存`);
     });
   };
   reader.readAsArrayBuffer(file);
-  input.value = '';
+  input.value='';
 }
 
-// ── Color UI ─────────────────────────────────────────
-
-function buildColorUI() {
-  const tabsEl = document.getElementById('cg-tabs');
-  tabsEl.innerHTML = '';
-  Object.keys(COLOR_GROUPS).forEach(g => {
-    const b = document.createElement('button');
-    b.className = 'cg-tab' + (g === curGroup ? ' active' : '');
-    b.textContent = g;
-    b.onclick = () => { curGroup = g; buildColorUI(); };
+// ── Color UI ──
+function buildColorUI(){
+  const tabsEl=document.getElementById('cg-tabs');
+  tabsEl.innerHTML='';
+  Object.keys(COLOR_GROUPS).forEach(g=>{
+    const b=document.createElement('button');
+    b.className='cg-tab'+(g===curGroup?' active':'');
+    b.textContent=g;
+    b.onclick=()=>{curGroup=g;buildColorUI();};
     tabsEl.appendChild(b);
   });
-  const sw = document.getElementById('swatches');
-  sw.innerHTML = '';
-  COLOR_GROUPS[curGroup].forEach(c => {
-    const d = document.createElement('div');
-    d.className = 'swatch' + (c.hex === curTextColor ? ' active' : '');
-    d.style.background = c.hex;
-    d.title = c.name;
-    d.onclick = () => { curTextColor = c.hex; updateSelInfo(c); buildColorUI(); draw(); };
+  const sw=document.getElementById('swatches');
+  sw.innerHTML='';
+  COLOR_GROUPS[curGroup].forEach(c=>{
+    const d=document.createElement('div');
+    d.className='swatch'+(c.hex===curTextColor?' active':'');
+    d.style.background=c.hex;
+    d.style.boxShadow=c.hex==='#ffffff'?'inset 0 0 0 1px #ccc':'none';
+    d.title=c.name;
+    d.onclick=()=>{curTextColor=c.hex;updateSelInfo(c);buildColorUI();draw();};
     sw.appendChild(d);
   });
 }
 
-function updateSelInfo(c) {
-  document.getElementById('sel-dot').style.background = c.hex;
-  document.getElementById('sel-name').textContent = c.name;
-  document.getElementById('sel-hex').textContent = c.hex;
+function updateSelInfo(c){
+  document.getElementById('sel-dot').style.background=c.hex;
+  document.getElementById('sel-name').textContent=c.name;
+  document.getElementById('sel-hex').textContent=c.hex;
 }
 
-// ── BG ───────────────────────────────────────────────
-
-function buildBgPresets() {
-  const row = document.getElementById('bg-presets');
-  row.innerHTML = '';
-  BG_PRESETS.forEach(p => {
-    const b = document.createElement('button');
-    b.className = 'bg-preset' + (p.color === curBgColor ? ' active' : '');
-    b.style.background = p.color;
-    b.style.color = ['#ffffff','#f5efe0','#f0eeea'].includes(p.color) ? '#222' : '#eee';
-    b.textContent = p.label;
-    b.onclick = () => {
-      curBgColor = p.color;
-      document.getElementById('bg-color').value = p.color;
-      buildBgPresets(); draw();
-    };
-    row.appendChild(b);
-  });
+// ── Controls ──
+function setMode(m){
+  curMode=m;
+  ['h','v'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===m));
+  draw();
 }
-
-function onBgCustom() {
-  curBgColor = document.getElementById('bg-color').value;
-  buildBgPresets(); draw();
-}
-
-// ── Controls ─────────────────────────────────────────
-
-function setMode(m) {
-  curMode = m;
-  ['h','v'].forEach(x => document.getElementById('btn-'+x).classList.toggle('active', x === m));
+function setAlign(a){
+  curAlign=a;
+  ['l','c','r'].forEach((x,i)=>document.getElementById('al-'+x).classList.toggle('active',['left','center','right'][i]===a));
   draw();
 }
 
-function setAlign(a) {
-  curAlign = a;
-  ['l','c','r'].forEach((x,i) => document.getElementById('al-'+x).classList.toggle('active', ['left','center','right'][i] === a));
-  draw();
-}
+// ── Draw ──
+function draw(){
+  const ls=parseInt(document.getElementById('ls').value);
+  const lh=parseFloat(document.getElementById('lh').value);
+  const fs=parseInt(document.getElementById('fs').value);
+  document.getElementById('ls-v').textContent=ls+'px';
+  document.getElementById('lh-v').textContent=lh.toFixed(1);
+  document.getElementById('fs-v').textContent=fs+'px';
 
-// ── Draw ─────────────────────────────────────────────
+  const text=document.getElementById('text-input').value||'輸入文字預覽';
+  const lines=text.split('\n');
+  const canvas=document.getElementById('preview-canvas');
+  const ctx=canvas.getContext('2d');
+  ctx.font=`${fs}px '${curFont.css}', serif`;
 
-function draw() {
-  const canvas = document.getElementById('preview-canvas');
-  const ctx = canvas.getContext('2d');
-  const ls = parseInt(document.getElementById('ls').value);
-  const lh = parseFloat(document.getElementById('lh').value);
-  const fs = parseInt(document.getElementById('fs').value);
-  document.getElementById('ls-v').textContent = ls + 'px';
-  document.getElementById('lh-v').textContent = lh.toFixed(1);
-  document.getElementById('fs-v').textContent = fs + 'px';
-
-  const text = document.getElementById('text-input').value || '輸入文字預覽';
-  const W = canvas.width, H = canvas.height, padX = 48, padY = 48;
-  ctx.fillStyle = curBgColor; ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = curTextColor;
-  ctx.textBaseline = 'top';
-  ctx.font = `${fs}px '${curFont.css}', serif`;
-
-  const lines = text.split('\n');
-  const lineH = Math.round(fs * lh);
-
-  if (curMode === 'h') {
-    lines.forEach((line, li) => {
-      const y = padY + li * lineH;
-      let totalW = 0;
-      for (let i = 0; i < line.length; i++)
-        totalW += ctx.measureText(line[i]).width + (i < line.length - 1 ? ls : 0);
-      let x = curAlign === 'left' ? padX : curAlign === 'center' ? (W - totalW) / 2 : W - padX - totalW;
-      for (let ci = 0; ci < line.length; ci++) {
-        ctx.fillText(line[ci], x, y);
-        x += ctx.measureText(line[ci]).width + ls;
+  if(curMode==='h'){
+    let maxW=0;
+    lines.forEach(line=>{
+      let w=0;
+      for(let i=0;i<line.length;i++) w+=ctx.measureText(line[i]).width+(i<line.length-1?ls:0);
+      if(w>maxW) maxW=w;
+    });
+    const lineH=Math.round(fs*lh);
+    const W=Math.ceil(maxW)+PAD*2, H=lines.length*lineH+PAD*2;
+    canvas.width=W; canvas.height=H;
+    ctx.clearRect(0,0,W,H);
+    ctx.font=`${fs}px '${curFont.css}', serif`;
+    ctx.fillStyle=curTextColor; ctx.textBaseline='top';
+    lines.forEach((line,li)=>{
+      const y=PAD+li*lineH;
+      let totalW=0;
+      for(let i=0;i<line.length;i++) totalW+=ctx.measureText(line[i]).width+(i<line.length-1?ls:0);
+      let x=curAlign==='left'?PAD:curAlign==='center'?(W-totalW)/2:W-PAD-totalW;
+      for(let ci=0;ci<line.length;ci++){
+        ctx.fillText(line[ci],x,y);
+        x+=ctx.measureText(line[ci]).width+ls;
       }
     });
   } else {
-    const colW = Math.round(fs * lh);
-    lines.forEach((line, li) => {
-      const x = W - padX - fs - li * colW;
-      line.split('').forEach((ch, ci) => {
+    const lineH=Math.round(fs*lh);
+    const maxChars=Math.max(...lines.map(l=>l.length));
+    const W=lines.length*lineH+PAD*2, H=maxChars*lineH+PAD*2;
+    canvas.width=W; canvas.height=H;
+    ctx.clearRect(0,0,W,H);
+    ctx.font=`${fs}px '${curFont.css}', serif`;
+    ctx.fillStyle=curTextColor; ctx.textBaseline='top';
+    lines.forEach((line,li)=>{
+      const x=W-PAD-fs-li*lineH;
+      line.split('').forEach((ch,ci)=>{
         ctx.save();
-        if (/[A-Za-z0-9\-]/.test(ch)) {
-          ctx.translate(x + fs / 2, padY + ci * lineH + fs / 2);
-          ctx.rotate(Math.PI / 2);
-          ctx.fillText(ch, -fs / 2, -fs / 2);
+        if(/[A-Za-z0-9\-]/.test(ch)){
+          ctx.translate(x+fs/2,PAD+ci*lineH+fs/2); ctx.rotate(Math.PI/2);
+          ctx.fillText(ch,-fs/2,-fs/2);
         } else {
-          ctx.fillText(ch, x, padY + ci * lineH);
+          ctx.fillText(ch,x,PAD+ci*lineH);
         }
         ctx.restore();
       });
@@ -654,37 +395,41 @@ function draw() {
   }
 }
 
-// ── Actions ──────────────────────────────────────────
-
-function copyText() {
-  navigator.clipboard.writeText(document.getElementById('text-input').value).then(() => {
-    const btn = event.currentTarget, orig = btn.innerHTML;
-    btn.innerHTML = '<i class="ti ti-check"></i> 已複製';
-    setTimeout(() => btn.innerHTML = orig, 1500);
-  });
+// ── Actions ──
+async function copyImage(){
+  const canvas=document.getElementById('preview-canvas');
+  try{
+    const blob=await new Promise(res=>canvas.toBlob(res,'image/png'));
+    await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+    showToast('已複製圖片！');
+  }catch(e){
+    showToast('複製失敗，請改用下載');
+  }
 }
 
-function exportPNG() {
-  const a = document.createElement('a');
-  a.download = 'fonting.png';
-  a.href = document.getElementById('preview-canvas').toDataURL('image/png');
+function exportPNG(){
+  const a=document.createElement('a');
+  a.download='fonting.png';
+  a.href=document.getElementById('preview-canvas').toDataURL('image/png');
   a.click();
 }
 
-// ── Init ─────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
 
-const jasonFF = new FontFace(
-  'JasonHandwriting1',
-  'url(https://cdn.jsdelivr.net/gh/max32002/JasonHandWritingFonts@20240409/webfont/JasonHandwriting1-Regular.woff2)'
-);
-jasonFF.load().then(f => { document.fonts.add(f); draw(); }).catch(() => {});
+// ── Init ──
+const jasonFF=new FontFace('JasonHandwriting1','url(https://cdn.jsdelivr.net/gh/max32002/JasonHandWritingFonts@20240409/webfont/JasonHandwriting1-Regular.woff2)');
+jasonFF.load().then(f=>{document.fonts.add(f);draw();}).catch(()=>{});
 
+openDB().then(restoreFonts);
 buildFontGrid();
 buildColorUI();
-buildBgPresets();
-document.getElementById('text-input').addEventListener('input', draw);
+document.getElementById('text-input').addEventListener('input',draw);
 document.fonts.ready.then(draw);
-setTimeout(draw, 500);
+setTimeout(draw,500);
 </script>
 </body>
 </html>

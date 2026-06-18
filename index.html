@@ -33,7 +33,7 @@
   .toolbar { padding: 10px 16px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .toolbar-title { font-size: 13px; color: var(--text2); flex: 1; }
   .canvas-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 400px; background: repeating-conic-gradient(#ccc 0% 25%, transparent 0% 50%) 0 0/16px 16px; }
-  .preview-img { border-radius: var(--radius); max-width: 100%; display: block; -webkit-touch-callout: default; }
+  .preview-img { border-radius: var(--radius); max-width: 100%; display: block; }
   .hint { font-size: 12px; color: var(--text2); text-align: center; margin-top: 10px; line-height: 1.6; }
   textarea { width: 100%; border: 0.5px solid var(--border); border-radius: var(--radius); padding: 9px 10px; font-size: 15px; resize: vertical; background: var(--bg); color: var(--text); min-height: 72px; font-family: inherit; line-height: 1.5; }
   textarea:focus { outline: none; border-color: var(--border2); }
@@ -70,7 +70,7 @@
   .sel-dot { width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0; border: 0.5px solid var(--border); }
   .sel-name { font-size: 12px; color: var(--text); }
   .sel-hex { font-size: 11px; color: var(--text2); }
-  .action-btn { padding: 7px 12px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: none; cursor: pointer; font-size: 12px; color: var(--text); display: flex; align-items: center; gap: 5px; font-family: inherit; }
+  .action-btn { padding: 7px 12px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: none; cursor: pointer; font-size: 12px; color: var(--text); display: flex; align-items: center; gap: 5px; font-family: inherit; text-decoration: none; }
   .action-btn:hover { background: var(--bg2); }
   .action-btn.primary { background: var(--text); color: var(--bg); border-color: transparent; }
   .action-btn.primary:hover { opacity: .85; }
@@ -158,7 +158,9 @@
   <div class="preview-area">
     <div class="toolbar">
       <span class="toolbar-title">預覽（格子＝透明背景）</span>
-      <button class="action-btn primary" onclick="exportPNG()"><i class="ti ti-download"></i> 下載 PNG</button>
+      <a id="save-btn" class="action-btn primary" download="fonting.png">
+        <i class="ti ti-download"></i><span id="save-label">儲存圖片</span>
+      </a>
     </div>
     <div class="canvas-wrap">
       <div style="text-align:center">
@@ -202,8 +204,9 @@ let zhFonts=[...ZH_FONTS], enFonts=[...EN_FONTS];
 let curFont=zhFonts[0], curMode='h', curAlign='left';
 let curTextColor='#2d2d2d', fontTab='zh', curGroup='白・黑';
 const PAD=32;
-let db;
+const DPR=Math.min(window.devicePixelRatio||1,3);
 const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+let db;
 
 function openDB(){
   return new Promise((res,rej)=>{
@@ -231,7 +234,6 @@ async function restoreFonts(){
 }
 
 function getActiveFonts(){ return fontTab==='zh'?zhFonts:enFonts; }
-
 function buildFontGrid(){
   const grid=document.getElementById('font-grid');
   grid.innerHTML='';
@@ -249,7 +251,6 @@ function buildFontGrid(){
     grid.appendChild(b);
   });
 }
-
 function removeCustomFont(f){
   deleteFont(f.name);
   if(fontTab==='zh') zhFonts=zhFonts.filter(x=>x!==f);
@@ -257,14 +258,12 @@ function removeCustomFont(f){
   if(curFont===f) curFont=getActiveFonts()[0];
   buildFontGrid(); draw();
 }
-
 function switchFontTab(tab,el){
   fontTab=tab;
   document.querySelectorAll('.font-tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   buildFontGrid();
 }
-
 function loadCustomFont(input){
   const file=input.files[0]; if(!file) return;
   const name=file.name.replace(/\.[^.]+$/,'');
@@ -307,13 +306,11 @@ function buildColorUI(){
     sw.appendChild(d);
   });
 }
-
 function updateSelInfo(c){
   document.getElementById('sel-dot').style.background=c.hex;
   document.getElementById('sel-name').textContent=c.name;
   document.getElementById('sel-hex').textContent=c.hex;
 }
-
 function setMode(m){
   curMode=m;
   ['h','v'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===m));
@@ -339,6 +336,7 @@ function draw(){
   const ctx=canvas.getContext('2d');
   ctx.font=`${fs}px '${curFont.css}', serif`;
 
+  let logicalW, logicalH, lineH;
   if(curMode==='h'){
     let maxW=0;
     lines.forEach(line=>{
@@ -346,32 +344,38 @@ function draw(){
       for(let i=0;i<line.length;i++) w+=ctx.measureText(line[i]).width+(i<line.length-1?ls:0);
       if(w>maxW) maxW=w;
     });
-    const lineH=Math.round(fs*lh);
-    const W=Math.ceil(maxW)+PAD*2, H=lines.length*lineH+PAD*2;
-    canvas.width=W; canvas.height=H;
-    ctx.clearRect(0,0,W,H);
-    ctx.font=`${fs}px '${curFont.css}', serif`;
-    ctx.fillStyle=curTextColor; ctx.textBaseline='top';
+    lineH=Math.round(fs*lh);
+    logicalW=Math.ceil(maxW)+PAD*2;
+    logicalH=lines.length*lineH+PAD*2;
+  } else {
+    lineH=Math.round(fs*lh);
+    const maxChars=Math.max(...lines.map(l=>l.length));
+    logicalW=lines.length*lineH+PAD*2;
+    logicalH=maxChars*lineH+PAD*2;
+  }
+
+  canvas.width=logicalW*DPR;
+  canvas.height=logicalH*DPR;
+  ctx.scale(DPR,DPR);
+  ctx.clearRect(0,0,logicalW,logicalH);
+  ctx.font=`${fs}px '${curFont.css}', serif`;
+  ctx.fillStyle=curTextColor;
+  ctx.textBaseline='top';
+
+  if(curMode==='h'){
     lines.forEach((line,li)=>{
       const y=PAD+li*lineH;
       let totalW=0;
       for(let i=0;i<line.length;i++) totalW+=ctx.measureText(line[i]).width+(i<line.length-1?ls:0);
-      let x=curAlign==='left'?PAD:curAlign==='center'?(W-totalW)/2:W-PAD-totalW;
+      let x=curAlign==='left'?PAD:curAlign==='center'?(logicalW-totalW)/2:logicalW-PAD-totalW;
       for(let ci=0;ci<line.length;ci++){
         ctx.fillText(line[ci],x,y);
         x+=ctx.measureText(line[ci]).width+ls;
       }
     });
   } else {
-    const lineH=Math.round(fs*lh);
-    const maxChars=Math.max(...lines.map(l=>l.length));
-    const W=lines.length*lineH+PAD*2, H=maxChars*lineH+PAD*2;
-    canvas.width=W; canvas.height=H;
-    ctx.clearRect(0,0,W,H);
-    ctx.font=`${fs}px '${curFont.css}', serif`;
-    ctx.fillStyle=curTextColor; ctx.textBaseline='top';
     lines.forEach((line,li)=>{
-      const x=W-PAD-fs-li*lineH;
+      const x=logicalW-PAD-fs-li*lineH;
       line.split('').forEach((ch,ci)=>{
         ctx.save();
         if(/[A-Za-z0-9\-]/.test(ch)){
@@ -385,16 +389,16 @@ function draw(){
     });
   }
 
+  const dataUrl=canvas.toDataURL('image/png');
   const img=document.getElementById('preview-img');
-  img.src=canvas.toDataURL('image/png');
-  document.getElementById('save-hint').textContent=isIOS?'長按圖片 → 儲存到相片':'';
-}
+  img.src=dataUrl;
+  img.style.width=logicalW+'px';
+  img.style.height=logicalH+'px';
 
-function exportPNG(){
-  const a=document.createElement('a');
-  a.download='fonting.png';
-  a.href=document.getElementById('preview-canvas').toDataURL('image/png');
-  a.click();
+  const btn=document.getElementById('save-btn');
+  btn.href=dataUrl;
+  document.getElementById('save-label').textContent=isIOS?'儲存圖片':'下載 PNG';
+  document.getElementById('save-hint').textContent=isIOS?'點按鈕儲存，或長按預覽圖片 → 儲存到相片':'';
 }
 
 function showToast(msg){
